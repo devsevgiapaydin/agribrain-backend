@@ -21,11 +21,16 @@
     </a>
 </div>
 
-  <ul class="menu">
+<ul class="menu">
     <li><a href="#home">Ana Sayfa</a></li>
     <li><a href="#features">Özellikler</a></li>
     <li><a href="#process">Nasıl Çalışır</a></li>
     <li><a href="#analysis">Analiz</a></li>
+
+    {% if user %}
+    <li><a href="/dashboard">Dashboard</a></li>
+    {% endif %}
+
     <li><a href="#about">Hakkımızda</a></li>
     <li><a href="#contact">İletişim</a></li>
 </ul>
