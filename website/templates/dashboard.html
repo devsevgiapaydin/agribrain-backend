@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriBrain Dashboard</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+    
+
+<nav class="navbar">
+
+<div class="logo">
+    <a href="/">
+        <img src="{{ url_for('static', filename='logo.svg') }}" alt="AgriBrain Logo">
+    </a>
+</div>
+
+    <ul class="menu">
+        <li><a href="/">Ana Sayfa</a></li>
+        <li><a href="/#analysis">Analiz</a></li>
+    </ul>
+
+    <div class="nav-right">
+
+        <p class="user-info">
+            Hoş geldin, {{ user }}
+        </p>
+
+        <a href="/logout" class="login-btn">
+            Çıkış Yap
+        </a>
+
+    </div>
+
+</nav>
+
+<div class="dashboard-header">
+
+   
+
+    <h1>Dashboard</h1>
+
+    <p>
+    Bitki analizlerini ve istatistiklerini buradan takip edebilirsin.
+</p>
+
+
+
+</div>
+
+    <hr>
+
+<div class="dashboard-stats">
+
+    <div class="stat-card">
+        <i class="fa-solid fa-chart-column"></i>
+        <h3>Toplam Analiz</h3>
+        <span>{{ analyses|length }}</span>
+    </div>
+
+    <div class="stat-card">
+        <i class="fa-solid fa-leaf"></i>
+        <h3>Sağlıklı Bitki</h3>
+        <span>
+{{ analyses|selectattr("result","equalto","Sağlıklı Bitki")|list|length }}
+</span>
+    </div>
+
+    <div class="stat-card">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <h3>Riskli Bitki</h3>
+        <span>{{ analyses|selectattr("result","equalto","Riskli Bitki")|list|length }}</span>
+
+    </div>
+
+</div>
+
+    <hr>
+
+    <h3>Son Analizler</h3>
+
+    {% if analyses %}
+
+<div class="analysis-table">
+
+    <div class="table-header">
+        <span>Tarih</span>
+        <span>Fotoğraf</span>
+        <span>Sonuç</span>
+        <span>Güven</span>
+    </div>
+
+    {% for analysis in analyses %}
+
+
+    <div class="table-row">
+    <span>{{ analysis.created_at }}</span>
+
+<span>
+    <i class="fa-solid fa-image"></i>
+    {{ analysis.image_name }}
+</span>
+
+<span class="status-badge {% if analysis.result == 'Sağlıklı Bitki' %}success{% else %}danger{% endif %}">
+    {{ analysis.result }}
+</span>
+
+
+<span>
+    {{ analysis.confidence }}%
+</span>
+    </div>
+
+    {% endfor %}
+
+</div>
+
+
+
+{% else %}
+
+<p>Henüz analiz bulunmuyor.</p>
+
+{% endif %}
+
+</body>
+</html>
+

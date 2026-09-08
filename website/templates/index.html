@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriBrain</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+
+  <body>
+
+<nav class="navbar">
+
+<div class="logo">
+    <a href="/">
+        <img src="{{ url_for('static', filename='logo.svg') }}" alt="AgriBrain Logo">
+    </a>
+</div>
+
+  <ul class="menu">
+    <li><a href="#home">Ana Sayfa</a></li>
+    <li><a href="#features">Özellikler</a></li>
+    <li><a href="#process">Nasıl Çalışır</a></li>
+    <li><a href="#analysis">Analiz</a></li>
+    <li><a href="#about">Hakkımızda</a></li>
+    <li><a href="#contact">İletişim</a></li>
+</ul>
+
+ <div class="nav-right">
+
+{% if user %}
+
+    <p class="user-info">
+        Hoş geldin, {{ user }}
+    </p>
+
+    <a href="/logout" class="login-btn">
+        Çıkış Yap
+    </a>
+
+{% else %}
+
+    <a href="/login" class="login-btn">
+        Giriş Yap
+    </a>
+
+{% endif %}
+
+</div>
+
+
+</nav>
+
+ 
+
+ <section id="home" class="hero">
+
+    <div class="hero-text">
+
+        <p class="hero-tagline">
+    Smart Brain for Smart Farming
+</p>
+
+
+<h1>
+    Yapay Zekâ Destekli
+    <br>
+    <span>Akıllı Tarım</span>
+    Platformu
+</h1>
+
+<p>
+AgriBrain, yapay zekâ destekli analiz teknolojileriyle bitki sağlığını erken teşhis eder, üretim süreçlerini optimize eder ve sürdürülebilir tarımı dijital çözümlerle geleceğe taşır.
+</p>
+
+<a href="#analysis" class="analyze-btn">
+    Analize Başla
+</a>
+    </div>
+
+<div class="hero-image">
+    
+</div>
+</section>
+
+
+
+
+<section id="features" class="features">
+
+    <h2>Öne Çıkan Özellikler</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="icon">
+                <i class="fa-solid fa-robot"></i>
+            </div>
+
+            <h3>Yapay Zekâ Analizi</h3>
+
+            <p>
+                Gelişmiş yapay zekâ algoritmaları ile bitki hastalıklarını hızlı ve doğru şekilde analiz eder.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icon">
+                <i class="fa-solid fa-seedling"></i>
+            </div>
+
+            <h3>Erken Hastalık Tespiti</h3>
+
+            <p>
+                Hastalık belirtilerini erken aşamada tespit ederek ürün kayıplarını azaltmaya yardımcı olur.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icon">
+                <i class="fa-solid fa-chart-column"></i>
+            </div>
+
+            <h3>Akıllı Raporlama</h3>
+
+            <p>
+                Analiz sonuçlarını anlaşılır raporlar halinde sunarak doğru karar vermeyi kolaylaştırır.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icon">
+                <i class="fa-solid fa-mobile-screen-button"></i>
+            </div>
+
+            <h3>Dijital Takip</h3>
+
+            <p>
+                Geçmiş analizlerinizi saklar ve bitki gelişimini tek platform üzerinden takip etmenizi sağlar.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<section id="process" class="how-it-works">
+
+    <h2>AgriBrain Nasıl Çalışır?</h2>
+
+    <div class="steps">
+
+        <div class="step">
+            <div class="step-number">1</div>
+            <h3>Bitki Görselini Yükleyin</h3>
+            <p>Analiz edilmesini istediğiniz bitki görselini sisteme güvenli şekilde yükleyin.</p>
+        </div>
+
+        <div class="step">
+            <div class="step-number">2</div>
+            <h3>Yapay Zekâ Analiz Etsin</h3>
+            <p>Gelişmiş yapay zekâ modeli görseli analiz ederek hastalık belirtilerini tespit eder.</p>
+        </div>
+
+        <div class="step">
+            <div class="step-number">3</div>
+            <h3>Sonuçları Görüntüleyin</h3>
+            <p>Risk oranı, hastalık adı ve önerilen çözümler ayrıntılı rapor olarak sunulur.</p>
+        </div>
+
+    </div>
+
+</section>
+
+    <section id="about" class="about">
+
+    <div class="about-text">
+
+        <h2>AgriBrain Hakkında</h2>
+<p>
+    AgriBrain, tarım ile bilişim teknolojilerini bir araya getiren yenilikçi bir tarım teknolojileri markasıdır.
+    Dijital tarım uygulamaları, veri temelli çözümler, yazılım sistemleri ve akıllı tarım teknolojileri geliştirerek
+    üreticilerin ve tarım işletmelerinin süreçlerini daha verimli, kontrollü ve sürdürülebilir hale getirmeyi amaçlar.
+    AgriBrain, teknoloji ve veriyi tarımla buluşturarak dijital tarımın geleceğine katkı sağlar.
+</p>
+
+    </div>
+
+    <div class="about-logo">
+
+        🌱
+
+    </div>
+
+</section>
+<section id="analysis" class="ai-demo">
+<h2>Bitki Sağlığı Analizi</h2>
+
+    <p class="section-text">
+
+Bitki görselinizi yükleyin. AgriBrain, yapay zekâ destekli analiz teknolojisiyle bitki sağlığını değerlendirerek size hızlı ve güvenilir sonuçlar sunar.
+</p>
+
+    <div class="ai-container">
+
+<div class="upload-box">
+
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+
+    <div class="upload-icon">
+    <i class="fa-solid fa-cloud-arrow-up"></i>
+</div>
+
+        <h3>Bitki Görseli</h3>
+
+        <p>PNG veya JPG formatındaki bitki görselinizi sisteme yükleyin.</p>
+
+        <input
+            type="file"
+            name="image"
+            accept=".png,.jpg,.jpeg"
+            required>
+
+        <br><br>
+
+        <button type="submit">
+           Analizi Başlat
+        </button>
+
+    </form>
+
+</div>
+
+<div class="result-box">
+
+    <div class="upload-icon">
+        <i class="fa-solid fa-chart-line"></i>
+    </div>
+
+    <h3>Analiz Sonucu</h3>
+
+    {% if result %}
+
+        <p><strong>Durum:</strong> {{ result["disease"] }}</p>
+
+        <p><strong>Güven Oranı:</strong> %{{ result["confidence"] }}</p>
+
+        <p><strong>Öneri:</strong> {{ result["recommendation"] }}</p>
+
+    {% else %}
+
+        <p>Henüz analiz yapılmadı.</p>
+
+    {% endif %}
+
+</div>
+
+    </div>
+
+</section>
+<section id="contact" class="contact">
+
+    <h2>İletişim</h2>
+
+    <div class="contact-container">
+
+        <div class="contact-card">
+            <h3><i class="fa-solid fa-envelope"></i> E-posta</h3>
+            <p>info@agribrain.com</p>
+        </div>
+
+        <div class="contact-card">
+            <h3><i class="fa-solid fa-location-dot"></i> Konum</h3>
+            <p>Ankara, Türkiye</p>
+        </div>
+
+        <div class="contact-card">
+            <h3><i class="fa-solid fa-globe"></i> Web</h3>
+            <p>www.agribrain.com</p>
+        </div>
+
+    </div>
+    </section> 
+    <footer class="footer">
+
+    <div class="footer-content">
+
+<h2>AgriBrain</h2>
+<div class="footer-links">
+    <a href="/kvkk">KVKK</a>
+    <a href="/privacy">Gizlilik Politikası</a>
+</div>
+
+<p>
+    Yapay zekâ destekli dijital tarım platformu.
+</p>
+
+<p>
+    Yapay Zekâ • Dijital Tarım • Veri Analitiği • Sürdürülebilir Tarım
+</p>
+
+<p>
+    Tarım ve teknolojiyi bir araya getirerek dijital tarımın geleceğine katkı sağlıyoruz.
+</p>
+
+<p class="copyright">
+    © 2026 AgriBrain • Tüm hakları saklıdır.
+</p>
+
+    </div>
+
+</footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+
+
+<footer class="footer">
+    <p>© 2026 AgriBrain | AI Powered Smart Farming</p>
+</footer>
+  </body>
+</html>
+    
+
+
