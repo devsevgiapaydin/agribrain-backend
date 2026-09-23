@@ -245,3 +245,37 @@ def iletisim_ekle():
             "success": False,
             "message": "Sunucu tarafında bir hata oluştu."
         }), 500
+        iletisim_kayitlari = []
+
+@main.route("/api/iletisim", methods=["GET", "POST", "OPTIONS"])
+def api_iletisim():
+    if request.method == "OPTIONS":
+        response = jsonify({"ok": True})
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+        response.headers.add("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        return response
+
+    if request.method == "POST":
+        data = request.get_json() or {}
+
+        kayit = {
+            "id": len(iletisim_kayitlari) + 1,
+            "adSoyad": data.get("adSoyad", ""),
+            "email": data.get("email", ""),
+            "mesaj": data.get("mesaj", ""),
+            "tarih": data.get("tarih", "")
+        }
+
+        iletisim_kayitlari.append(kayit)
+
+        response = jsonify({
+            "success": True,
+            "data": kayit
+        })
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        return response
+
+    response = jsonify(iletisim_kayitlari)
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
