@@ -2,12 +2,15 @@ import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
+
 app = Flask(__name__)
 CORS(app)  # Wix'ten gelen isteklere izin verir
+
 
 @app.route('/', methods=['GET'])
 def home():
     return jsonify({'durum': 'aktif', 'sirket': 'AgriBrain'}), 200
+
 
 @app.route('/api/sohbet', methods=['POST'])
 def sohbet():
@@ -34,6 +37,33 @@ def sohbet():
         cevap = f"AgriBrain Asistanı: '{mesaj}' hakkındaki sorunuzu aldım. AgriGrow veya akıllı tarım teknolojilerimiz hakkında size nasıl yardımcı olabilirim?"
 
     return jsonify({'basari': True, 'cevap': cevap}), 200
+
+
+iletisim_kayitlari = []
+
+
+@app.route('/api/iletisim', methods=['GET', 'POST'])
+def iletisim():
+    if request.method == 'POST':
+        data = request.get_json() or {}
+
+        kayit = {
+            'id': len(iletisim_kayitlari) + 1,
+            'adSoyad': data.get('adSoyad', ''),
+            'email': data.get('email', ''),
+            'mesaj': data.get('mesaj', ''),
+            'tarih': data.get('tarih', '')
+        }
+
+        iletisim_kayitlari.append(kayit)
+
+        return jsonify({
+            'success': True,
+            'data': kayit
+        }), 201
+
+    return jsonify(iletisim_kayitlari), 200
+
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
