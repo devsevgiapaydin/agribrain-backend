@@ -36,6 +36,16 @@ def create_tables():
     )
 """)
 
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS contacts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            ad_soyad TEXT NOT NULL,
+            email TEXT NOT NULL,
+            mesaj TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+
     conn.commit()
     conn.close()
 
@@ -96,3 +106,37 @@ def get_user_analyses(user_email):
     conn.close()
 
     return analyses
+
+
+def save_contact(ad_soyad, email, mesaj):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        INSERT INTO contacts (ad_soyad, email, mesaj)
+        VALUES (?, ?, ?)
+    """, (ad_soyad, email, mesaj))
+
+    conn.commit()
+    yeni_id = cursor.lastrowid
+    conn.close()
+
+    return yeni_id
+
+
+def get_contacts():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT id, ad_soyad, email, mesaj, created_at
+        FROM contacts
+        ORDER BY created_at DESC
+    """)
+
+    rows = cursor.fetchall()
+
+    conn.close()
+
+    # sqlite3.Row nesnesi JSON'a cevrilemez; dict'e ceviriyoruz.
+    return [dict(satir) for satir in rows]

@@ -1,7 +1,14 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, jsonify
 from werkzeug.utils import secure_filename
 from ai_service import analyze_image
-from database import create_user, get_user, save_analysis, get_user_analyses
+from database import (
+    create_user,
+    get_user,
+    save_analysis,
+    get_user_analyses,
+    save_contact,
+    get_contacts,
+)
 import os
 
 
@@ -190,7 +197,7 @@ def iletisim_ekle():
 
     try:
 
-        data = request.get_json()
+        data = request.get_json(silent=True)
 
         if not data:
             return jsonify({
@@ -220,17 +227,15 @@ def iletisim_ekle():
                 "message": "Mesaj alanı zorunludur."
             }), 400
 
-        print("===================================")
-        print("Yeni iletişim mesajı alındı")
-        print("Ad Soyad:", ad_soyad)
-        print("Email:", email)
-        print("Mesaj:", mesaj)
-        print("===================================")
+        # Sayfa kodu atlatilabilir, dogrulama burada da yapilir.
+        # Veri artik print edilmiyor, veritabanina yaziliyor.
+        yeni_id = save_contact(ad_soyad, email, mesaj)
 
         return jsonify({
             "success": True,
             "message": "Mesaj başarıyla alındı.",
             "data": {
+                "id": yeni_id,
                 "adSoyad": ad_soyad,
                 "email": email,
                 "mesaj": mesaj
@@ -244,4 +249,35 @@ def iletisim_ekle():
         return jsonify({
             "success": False,
             "message": "Sunucu tarafında bir hata oluştu."
+        }), 500
+
+
+# =========================================================
+# WIX DASHBOARD - KAYIT LISTESI
+#
+# KVKK: bu uc ad, e-posta ve mesaj dondurur, yani kisisel veridir.
+# Su an herkese aciktir. Teslimden once Wix'te Dashboard sayfasi
+# uye girisi arkasina alinmalidir.
+# =========================================================
+
+@main.route("/api/iletisim", methods=["GET"])
+def iletisim_listesi():
+
+    try:
+
+        kayitlar = get_contacts()
+
+        return jsonify({
+            "success": True,
+            "count": len(kayitlar),
+            "data": kayitlar
+        }), 200
+
+    except Exception as error:
+
+        print("İletişim listesi hatası:", error)
+
+        return jsonify({
+            "success": False,
+            "message": "Kayıtlara şu an ulaşılamıyor."
         }), 500
