@@ -1,6 +1,9 @@
 from flask import Flask, render_template
 from routes import main
 from database import create_tables
+from flask_cors import Cors
+
+Cors(app)
 
 app = Flask(
     __name__,
